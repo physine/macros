@@ -15,21 +15,24 @@ The Java Macros Project is a versatile tool designed to automate repetitive task
 ### Prerequisites
 - Java JDK 8 or later.
 - PostgreSQL database.
-- Set environment variables `AES_ENCRYPTION_KEY` of 32 bytes.
+- Set an environment variable `AES_ENCRYPTION_KEY` of 32 bytes. Generate a key using:
+```bash
+    python -c "import os, binascii; print(binascii.hexlify(os.urandom(16)).decode())"
+```
 
-  `python -c "import os, binascii; print(binascii.hexlify(os.urandom(16)).decode())"`
 
-### Installation and Running
-1. **Clone the Repository:**
-
-   `git clone https://github.com/your-username/java-macros.git`
-
-   `cd java-macros`
+### Clone the Repository
+```bash
+    git clone https://github.com/your-username/java-macros.git
+    cd java-macros
+```
 
 ### Build the Project
-
-   `mvn clean install`
+```bash
+    mvn clean install
+```
 
 ### Run the Application
-    
+```bash
     java -jar target/macros-1.0-SNAPSHOT.jar
+```
