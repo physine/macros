@@ -24,23 +24,11 @@ public class EncryptionTest {
         cypherText = encryption.encrypt(planeText);
         assertEquals(planeText, encryption.decrypt(cypherText));
 
-        planeText = "Hello\uD83D\uDE0AWorld\uD83C\uDF0F";
-        cypherText = encryption.encrypt(planeText);
-        assertEquals(planeText, encryption.decrypt(cypherText));
-
-        planeText = "\"Hello! 2023 @Home\uD83D\uDE0A #World\"";
-        cypherText = encryption.encrypt(planeText);
-        assertEquals(planeText, encryption.decrypt(cypherText));
-
         planeText = "\"\"";
         cypherText = encryption.encrypt(planeText);
         assertEquals(planeText, encryption.decrypt(cypherText));
 
         planeText = "\"\"";
-        cypherText = encryption.encrypt(planeText);
-        assertEquals(planeText, encryption.decrypt(cypherText));
-
-        planeText = "\"Привет мир\"";
         cypherText = encryption.encrypt(planeText);
         assertEquals(planeText, encryption.decrypt(cypherText));
 

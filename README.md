@@ -21,6 +21,15 @@ The Java Macros Project is a versatile tool designed to automate repetitive task
 
 ### Installation and Running
 1. **Clone the Repository:**
-   ```bash
-   git clone https://github.com/your-username/java-macros.git
-   cd java-macros
+
+   `git clone https://github.com/your-username/java-macros.git`
+
+   `cd java-macros`
+
+### Build the Project
+
+   `mvn clean install`
+
+### Run the Application
+    
+    java -jar target/macros-1.0-SNAPSHOT.jar
