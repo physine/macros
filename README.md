@@ -23,8 +23,8 @@ The Java Macros Project is a versatile tool designed to automate repetitive task
 
 ### Clone the Repository
 ```bash
-    git clone https://github.com/your-username/java-macros.git
-    cd java-macros
+    git clone https://github.com/physine/macros.git
+    cd macros
 ```
 
 ### Build the Project
