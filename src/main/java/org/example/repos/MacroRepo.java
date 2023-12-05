@@ -23,19 +23,22 @@ public class MacroRepo implements IMacroRepo {
     @Override
     public void save(Macro macro) {
         entityManager.getTransaction().begin();
+        encryptMacro(macro);
         entityManager.persist(macro);
         entityManager.getTransaction().commit();
     }
 
     @Override
     public Macro findById(Long id) {
-        return this.entityManager.find(Macro.class, id);
+        return decryptMacro(entityManager.find(Macro.class, id));
     }
 
     @Override
     public List<Macro> loadMacros() {
         TypedQuery<Macro> query = entityManager.createQuery("SELECT m FROM Macro m", Macro.class);
-        return query.getResultList();
+        List<Macro> macros = query.getResultList();
+        decryptMacros(macros);
+        return macros;
     }
 
     @Override
@@ -58,8 +61,9 @@ public class MacroRepo implements IMacroRepo {
     @Override
     public void updateMacro(Macro updatedMacro) {
         entityManager.getTransaction().begin();
-        Macro macro = this.entityManager.find(Macro.class, updatedMacro.getId());
+        Macro macro = entityManager.find(Macro.class, updatedMacro.getId());
         if (macro != null) {
+            encryptMacro(updatedMacro);
             macro.setTrigger(updatedMacro.getTrigger());
             macro.setTarget(updatedMacro.getTarget());
             entityManager.merge(macro);
@@ -72,5 +76,35 @@ public class MacroRepo implements IMacroRepo {
         entityManager.getTransaction().begin();
         entityManager.createQuery("DELETE FROM Macro").executeUpdate();
         entityManager.getTransaction().commit();
+    }
+
+    private void decryptMacros(List<Macro> macros) {
+        for(Macro macro: macros){
+            decryptMacro(macro);
+            entityManager.detach(macro);
+        }
+    }
+
+    private Macro decryptMacro(Macro macro){
+        String target = macro.getTarget();
+        String decryptedTarget = "";
+        try {
+            decryptedTarget = encryption.decrypt(target);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        macro.setTarget(decryptedTarget);
+        return macro;
+    }
+
+    private void encryptMacro(Macro macro){
+        String target = macro.getTarget();
+        String encryptedTarget;
+        try {
+            encryptedTarget = encryption.encrypt(target);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        macro.setTarget(encryptedTarget);
     }
 }

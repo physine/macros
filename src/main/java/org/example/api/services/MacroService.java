@@ -19,8 +19,13 @@ public class MacroService {
         this.macroMatcher = macroMatcher;
     }
 
-    public List<Macro> macros(){
-        return macroRepo.loadMacros();
+    public ReqInfo macros(){
+        List<Macro> macros = macroRepo.loadMacros();
+        ReqInfo reqInfo = new ReqInfo();
+        reqInfo.setStatus(201);
+        reqInfo.setData(macros);
+        reqInfo.setMsg("macro created");
+        return reqInfo;
     }
 
     public ReqInfo createMacro(Macro macro){
@@ -38,6 +43,14 @@ public class MacroService {
         ReqInfo reqInfo = new ReqInfo();
         reqInfo.setStatus(200);
         reqInfo.setMsg("macro updated");
+        return reqInfo;
+    }
+
+    public ReqInfo deleteMacro(Long id){
+        macroRepo.deleteById(id);
+        ReqInfo reqInfo = new ReqInfo();
+        reqInfo.setStatus(200);
+        reqInfo.setMsg("macro deleted");
         return reqInfo;
     }
 

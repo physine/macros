@@ -54,6 +54,27 @@ public class MacroRepoTest {
     }
 
     @Test
+    public void inputLengthMustBeMultipleOf16() {
+        Macro macro1 = new Macro("!one", "1111111111");
+        macroRepo.save(macro1);
+        List<Macro> macros1 = macroRepo.loadMacros();
+        assertEquals(1, macros1.size());
+        assertTrue(macros1.contains(macro1));
+
+        Macro macro2 = new Macro("!two", "222222222");
+        macroRepo.save(macro2);
+        List<Macro> macros2 = macroRepo.loadMacros();
+        assertEquals(2, macros2.size());
+        assertTrue(macros2.contains(macro2));
+
+        Macro macro3 = new Macro("!three", "3333333333");
+        macroRepo.save(macro3);
+        List<Macro> macros3 = macroRepo.loadMacros();
+        assertEquals(3, macros3.size());
+        assertTrue(macros3.contains(macro3));
+    }
+
+    @Test
     public void clearTableTest() {
         assertEquals(0, macroRepo.loadMacros().size());
         macroRepo.save(new Macro("trigger1", "target1"));

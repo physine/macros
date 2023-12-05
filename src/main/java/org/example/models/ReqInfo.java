@@ -3,7 +3,9 @@ package org.example.models;
 public class ReqInfo {
 
     private String msg;
-    public int status;
+    private int status;
+    private Object data;
+
 
     public String getMsg() {
         return msg;
@@ -11,6 +13,14 @@ public class ReqInfo {
 
     public void setMsg(String msg) {
         this.msg = msg;
+    }
+
+    public Object getData() {
+        return data;
+    }
+
+    public void setData(Object data) {
+        this.data = data;
     }
 
     public int getStatus() {

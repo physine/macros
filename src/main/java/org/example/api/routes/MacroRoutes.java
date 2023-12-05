@@ -22,10 +22,10 @@ public class MacroRoutes {
     }
 
     private void setupRoutes() {
+
         get("/api/v1/macros", (req, res) -> {
-            System.out.println("Called the endpoint GET /api/v1/macros");
-            List<Macro> macros = macroService.macros();
-            String json = gson.toJson(macros);
+            ReqInfo reqInfo = macroService.macros();
+            String json = gson.toJson(reqInfo.getData());
             res.type("application/json");
             return json;
         });
@@ -40,6 +40,13 @@ public class MacroRoutes {
         post("/api/v1/update-macro", (req, res) -> {
             Macro macro = gson.fromJson(req.body(), Macro.class);
             ReqInfo reqInfo = macroService.updateMacro(macro);
+            res.status(reqInfo.getStatus());
+            return reqInfo.getMsg();
+        });
+
+        delete("/api/v1/delete-macro", (req, res) -> {
+            Long id = gson.fromJson(req.body(), Long.class);
+            ReqInfo reqInfo = macroService.deleteMacro(id);
             res.status(reqInfo.getStatus());
             return reqInfo.getMsg();
         });

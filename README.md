@@ -41,3 +41,5 @@ The Java Macros Project is a versatile tool designed to automate repetitive task
 A Command Line Interface (CLI) for creation and management of macros directly from the command line.
 
 Stay tuned for updates on these features!
+
+### Future Features
