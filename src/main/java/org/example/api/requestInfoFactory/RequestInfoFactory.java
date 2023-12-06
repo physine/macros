@@ -6,7 +6,7 @@ import org.example.models.ReqInfo;
 
 import java.util.List;
 
-public class RequestInfoFactory {
+public class RequestInfoFactory{
 
     public static ReqInfo createReq(boolean operationResult){
         ReqInfo reqInfo = new ReqInfo();
@@ -22,12 +22,9 @@ public class RequestInfoFactory {
 
     public static ReqInfo retrieveReq(List<Macro> operationResult){
         ReqInfo reqInfo = new ReqInfo();
-
         reqInfo.setStatus(200);
-
         String json = new Gson().toJson(operationResult);
         reqInfo.setResponse(json);
-
         return reqInfo;
     }
 

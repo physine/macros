@@ -55,5 +55,4 @@ Stay tuned for updates on these features!
 ### TODOs
 
 - create better exceptions
-- create better responses from the macro service to the macro controller using ReqInfo (possible make use a factory here)
 - create a cli

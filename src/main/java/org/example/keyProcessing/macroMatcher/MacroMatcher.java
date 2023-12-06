@@ -7,7 +7,6 @@ import java.util.List;
 public class MacroMatcher implements IMacroMatcher {
 
     private List<Macro> macros;
-
     private static MacroMatcher instance = null;
 
     private MacroMatcher(){

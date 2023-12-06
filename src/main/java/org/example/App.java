@@ -28,7 +28,7 @@ public class App {
         keyReader.startReading();
 
         MacroRoutesComponent macroRoutesComponent = DaggerMacroRoutesComponent.create();
-        MacroRoutes macroRoutes = macroRoutesComponent.buildMacroRoutes();
+        macroRoutesComponent.buildMacroRoutes();
     }
 
     private static void configLogger() {

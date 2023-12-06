@@ -5,6 +5,8 @@ import jakarta.persistence.Persistence;
 import jakarta.persistence.RollbackException;
 import jakarta.persistence.TypedQuery;
 import org.example.encryption.Encryption;
+import org.example.exceptions.IllegalDecryptionInput;
+import org.example.exceptions.IllegalEncryptionInput;
 import org.example.models.Macro;
 import javax.inject.Inject;
 import java.util.List;
@@ -114,7 +116,7 @@ public class MacroRepo implements IMacroRepo {
         try {
             decryptedTarget = encryption.decrypt(target);
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new IllegalDecryptionInput(String.format("Invalid decryption input: %s", macro.getTarget()));
         }
         macro.setTarget(decryptedTarget);
         return macro;
@@ -126,7 +128,7 @@ public class MacroRepo implements IMacroRepo {
         try {
             encryptedTarget = encryption.encrypt(target);
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new IllegalEncryptionInput(String.format("Invalid encryption input: %s", macro.getTarget()));
         }
         macro.setTarget(encryptedTarget);
     }
