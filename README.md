@@ -2,7 +2,7 @@
 <div align="center">
 
 # Java Macros Project
-![logo.png](src%2Fmain%2Fresources%2Flogo.png)
+![logo (1).png](src%2Fmain%2Fresources%2Flogo%20%281%29.png)
 
 </div>
 
