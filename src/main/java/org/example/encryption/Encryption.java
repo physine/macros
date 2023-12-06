@@ -7,13 +7,16 @@ import java.security.Key;
 import java.util.Base64;
 
 public class Encryption {
+
     private static final String ALGORITHM = "AES";
     private byte[] KEY;
+
     @Inject
     public Encryption() {
         String envVarValue = System.getenv("AES_ENCRYPTION_KEY");
         setKEY(envVarValue.getBytes());
     }
+
     public String encrypt(String data) throws Exception {
         Key key = new SecretKeySpec(KEY, ALGORITHM);
         Cipher cipher = Cipher.getInstance(ALGORITHM);
@@ -22,6 +25,7 @@ public class Encryption {
         byte[] encryptedBytes = cipher.doFinal(data.getBytes());
         return Base64.getEncoder().encodeToString(encryptedBytes);
     }
+
     public String decrypt(String encryptedData) throws Exception {
         Key key = new SecretKeySpec(KEY, ALGORITHM);
         Cipher cipher = Cipher.getInstance(ALGORITHM);
@@ -31,6 +35,7 @@ public class Encryption {
         byte[] decryptedBytes = cipher.doFinal(decodedBytes);
         return new String(decryptedBytes);
     }
+
     public void setKEY(byte[] KEY) {
         if (KEY != null && KEY.length == 32) {
             this.KEY = KEY;

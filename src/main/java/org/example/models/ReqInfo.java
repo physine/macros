@@ -2,25 +2,15 @@ package org.example.models;
 
 public class ReqInfo {
 
-    private String msg;
+    private String response;
     private int status;
-    private Object data;
 
-
-    public String getMsg() {
-        return msg;
+    public String getResponse() {
+        return response;
     }
 
-    public void setMsg(String msg) {
-        this.msg = msg;
-    }
-
-    public Object getData() {
-        return data;
-    }
-
-    public void setData(Object data) {
-        this.data = data;
+    public void setResponse(String response) {
+        this.response = response;
     }
 
     public int getStatus() {

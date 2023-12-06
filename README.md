@@ -50,6 +50,8 @@ Stay tuned for updates on these features!
 
 ### Future Features
 
+- active window macros
+
 ### TODOs
 
 - create better exceptions

@@ -1,5 +1,6 @@
 package org.example.api.services;
 
+import org.example.api.requestInfoFactory.RequestInfoFactory;
 import org.example.keyProcessing.macroMatcher.MacroMatcher;
 import org.example.models.Macro;
 import org.example.models.ReqInfo;
@@ -19,38 +20,33 @@ public class MacroService {
         this.macroMatcher = macroMatcher;
     }
 
-    public ReqInfo macros(){
-        List<Macro> macros = macroRepo.loadMacros();
-        ReqInfo reqInfo = new ReqInfo();
-        reqInfo.setStatus(201);
-        reqInfo.setData(macros);
-        reqInfo.setMsg("macro created");
+    public ReqInfo createMacro(Macro macro){
+        boolean operationResult = macroRepo.save(macro);
+        ReqInfo reqInfo = RequestInfoFactory.createReq(operationResult);
+        if (operationResult)
+            updateMacroMatcherState();
         return reqInfo;
     }
 
-    public ReqInfo createMacro(Macro macro){
-        macroRepo.save(macro);
-        updateMacroMatcherState();
-        ReqInfo reqInfo = new ReqInfo();
-        reqInfo.setStatus(201);
-        reqInfo.setMsg("macro created");
+    public ReqInfo retrieveMacros(){
+        List<Macro> operationResult = macroRepo.loadMacros();
+        ReqInfo reqInfo = RequestInfoFactory.retrieveReq(operationResult);
         return reqInfo;
     }
 
     public ReqInfo updateMacro(Macro macro){
-        macroRepo.updateMacro(macro);
-        updateMacroMatcherState();
-        ReqInfo reqInfo = new ReqInfo();
-        reqInfo.setStatus(200);
-        reqInfo.setMsg("macro updated");
+        boolean operationResult = macroRepo.updateMacro(macro);
+        ReqInfo reqInfo = RequestInfoFactory.updateReq(operationResult);
+        if (operationResult)
+            updateMacroMatcherState();
         return reqInfo;
     }
 
     public ReqInfo deleteMacro(Long id){
-        macroRepo.deleteById(id);
-        ReqInfo reqInfo = new ReqInfo();
-        reqInfo.setStatus(200);
-        reqInfo.setMsg("macro deleted");
+        boolean operationResult = macroRepo.deleteById(id);
+        ReqInfo reqInfo = RequestInfoFactory.deleteReq(operationResult);
+        if (operationResult)
+            updateMacroMatcherState();
         return reqInfo;
     }
 

@@ -2,6 +2,7 @@ package org.example.repos;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Persistence;
+import jakarta.persistence.RollbackException;
 import jakarta.persistence.TypedQuery;
 import org.example.encryption.Encryption;
 import org.example.models.Macro;
@@ -21,11 +22,14 @@ public class MacroRepo implements IMacroRepo {
     }
 
     @Override
-    public void save(Macro macro) {
+    public boolean save(Macro macro) {
+        if (collision(macro))
+            return false;
         entityManager.getTransaction().begin();
         encryptMacro(macro);
         entityManager.persist(macro);
         entityManager.getTransaction().commit();
+        return true;
     }
 
     @Override
@@ -41,6 +45,10 @@ public class MacroRepo implements IMacroRepo {
         return macros;
     }
 
+    private boolean collision(Macro macro){
+        return existsByTrigger(macro.getTrigger()) || existsByTarget(macro.getTarget());
+    }
+
     @Override
     public boolean existsByTrigger(String trigger) {
         TypedQuery<Long> query = entityManager.createQuery("SELECT COUNT(m) FROM Macro m WHERE m.trigger = :trigger", Long.class);
@@ -49,17 +57,27 @@ public class MacroRepo implements IMacroRepo {
     }
 
     @Override
-    public void deleteById(Long id) {
+    public boolean existsByTarget(String target) {
+        TypedQuery<Long> query = entityManager.createQuery("SELECT COUNT(m) FROM Macro m WHERE m.target = :target", Long.class);
+        query.setParameter("target", target);
+        return query.getSingleResult() > 0;
+    }
+
+    @Override
+    public boolean deleteById(Long id) {
         entityManager.getTransaction().begin();
         Macro macro = entityManager.find(Macro.class, id);
         if (macro != null) {
             entityManager.remove(macro);
+        }else {
+            return false;
         }
         entityManager.getTransaction().commit();
+        return true;
     }
 
     @Override
-    public void updateMacro(Macro updatedMacro) {
+    public boolean updateMacro(Macro updatedMacro) {
         entityManager.getTransaction().begin();
         Macro macro = entityManager.find(Macro.class, updatedMacro.getId());
         if (macro != null) {
@@ -68,7 +86,12 @@ public class MacroRepo implements IMacroRepo {
             macro.setTarget(updatedMacro.getTarget());
             entityManager.merge(macro);
         }
-        entityManager.getTransaction().commit();
+        try {
+            entityManager.getTransaction().commit();
+            return true;
+        }catch (RollbackException e){
+            return false;
+        }
     }
 
     @Override
