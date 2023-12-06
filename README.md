@@ -49,3 +49,9 @@ A Command Line Interface (CLI) for creation and management of macros directly fr
 Stay tuned for updates on these features!
 
 ### Future Features
+
+### TODOs
+
+- create better exceptions
+- create better responses from the macro service to the macro controller using ReqInfo (possible make use a factory here)
+- create a cli
