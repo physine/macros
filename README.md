@@ -1,4 +1,10 @@
+
+<div align="center">
+
 # Java Macros Project
+![logo.png](src%2Fmain%2Fresources%2Flogo.png)
+
+</div>
 
 ## Overview
 The Java Macros Project is a versatile tool designed to automate repetitive tasks and enhance productivity. It allows users to define and execute custom macros in a Java-based environment, streamlining workflows and simplifying complex processes.
