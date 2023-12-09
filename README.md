@@ -56,3 +56,7 @@ Stay tuned for updates on these features!
 
 - create better exceptions
 - create a cli
+
+## Contributing
+
+Contributions are welcome! Feel free to submit pull requests, open issues, or suggest improvements.
