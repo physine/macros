@@ -55,7 +55,6 @@ Stay tuned for updates on these features!
 ### TODOs
 
 - create better exceptions
-- create a cli
 
 ## Contributing
 
