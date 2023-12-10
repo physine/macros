@@ -16,46 +16,49 @@ The Java Macros Project is a versatile tool designed to automate repetitive task
 - **Cross-Platform Support:** Compatible with various operating systems.
 - **Robust Database Management:** Uses a PostgreSQL database for storing and managing macro configurations.
 
-## Getting Started
+## Clone the Repository
+```bash
+git clone https://github.com/physine/macros.git
+cd macros
+```
 
-### Prerequisites
+## Prerequisites
 - Java JDK 8 or later.
-- PostgreSQL database.
+- PostgreSQL database, with a table defined like so (see persistence.xml for DB setup details):
+    ```sql
+    CREATE TABLE macros (
+    id SERIAL PRIMARY KEY,
+    trigger VARCHAR(255) NOT NULL UNIQUE,
+    target VARCHAR(255) NOT NULL
+    );
+    ```
 - Set an environment variable `AES_ENCRYPTION_KEY` of 32 bytes. Generate a key using:
 ```bash
-    python -c "import os, binascii; print(binascii.hexlify(os.urandom(16)).decode())"
+python -c "import os, binascii; print(binascii.hexlify(os.urandom(16)).decode())"
 ```
 
+## Package the Project
 
-### Clone the Repository
+Once in the `macros` project directory:
+
 ```bash
-    git clone https://github.com/physine/macros.git
-    cd macros
+cd path\to\macros
+mvn package
 ```
 
-### Build the Project
-```bash
-    mvn clean install
+Create a batch file to simplify the execution of the macros project, it will look like.
+
+```batch
+@echo off
+java -jar target/macros-1.0.jar %*
 ```
 
-### Run the Application
-```bash
-    java -jar target/macros-1.0-SNAPSHOT.jar
-```
+and run it from the command line or add it to the start-up folder.
 
-### In Progress
-A Command Line Interface (CLI) for creation and management of macros directly from the command line.
+## Future Features
 
-Stay tuned for updates on these features!
+- active window macros maybe
 
-### Future Features
-
-- active window macros
-
-### TODOs
-
-- create better exceptions
-
-## Contributing
+### Contributing
 
 Contributions are welcome! Feel free to submit pull requests, open issues, or suggest improvements.
