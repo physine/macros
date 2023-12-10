@@ -26,7 +26,6 @@ public class MacroRoutes {
         post("/api/v1/new-macro", (req, res) -> {
             Macro macro = gson.fromJson(req.body(), Macro.class);
             ReqInfo reqInfo = macroService.createMacro(macro);
-            res.type("application/json");
             res.status(reqInfo.getStatus());
             return reqInfo.getResponse();
         });
